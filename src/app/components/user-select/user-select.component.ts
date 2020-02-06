@@ -7,12 +7,13 @@ import { UserServiceService } from '../../services/user-service.service';
   styleUrls: ['./user-select.component.scss']
 })
 export class UserSelectComponent implements OnInit {
+  private usersList: any;
 
   constructor(private userService: UserServiceService) { }
 
   ngOnInit() {
     this.userService.getAllUsers().subscribe((data) => {
-      console.log(data);
+      this.usersList = data;
     });
   }
 
