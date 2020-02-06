@@ -1,5 +1,6 @@
 <ul>
-  <li *ngFor="let user of usersList">
+  <li *ngFor="let user of usersList" (click)="selectUser(user['_id'])">
     {{user['name']}} {{user['surname']}}
   </li>
 </ul>
+<button (click)="joinDaily()">Join Daily</button>

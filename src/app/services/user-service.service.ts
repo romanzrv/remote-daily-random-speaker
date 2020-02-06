@@ -13,4 +13,11 @@ export class UserServiceService {
   getAllUsers() {
     return this.http.get(this.usersApiUrl);
   }
+
+  getUser(userId) {
+    return this.http.get(`${this.usersApiUrl}${userId}`);
+  }
+
+  joinUserToTheDaily(userId) {
+  }
 }

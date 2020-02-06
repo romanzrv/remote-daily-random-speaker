@@ -8,6 +8,7 @@ import { UserServiceService } from '../../services/user-service.service';
 })
 export class UserSelectComponent implements OnInit {
   private usersList: any;
+  private selectedUser: any;
 
   constructor(private userService: UserServiceService) { }
 
@@ -15,6 +16,14 @@ export class UserSelectComponent implements OnInit {
     this.userService.getAllUsers().subscribe((data) => {
       this.usersList = data;
     });
+  }
+
+  selectUser(userId) {
+    this.selectedUser = userId;
+  }
+
+  joinDaily() {
+    this.userService.joinUserToTheDaily(this.selectedUser);
   }
 
 }
