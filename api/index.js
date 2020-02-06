@@ -6,6 +6,12 @@ const {mongoose} = require('./database');
 // Settings
 app.set('port', process.env.PORT || 3000);
 
+// Headers
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
+
 // Middlewares
 app.use(express.json());
 
