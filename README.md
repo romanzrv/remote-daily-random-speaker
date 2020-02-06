@@ -1,6 +1,10 @@
 # RemoteDailyRandomSpeaker
 
-A tiny webapp that select a random speaker for a remote daily meeting.
+A tiny webapp that selects a random speaker for a remote daily meeting.
+
+## Installation
+
+Run `npm install` to install dependencies.
 
 ## Development server
 
