@@ -7,7 +7,7 @@ const {mongoose} = require('./database');
 app.set('port', process.env.PORT || 3000);
 
 // Headers
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   next();
 });
@@ -17,6 +17,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/users', require('./routes/user.route'));
+app.use('/api/meeting', require('./routes/meeting.route'));
 
 // Starting the server
 app.listen(app.get('port'), () => {
