@@ -1,1 +1,7 @@
-<p>speaker-screen works!</p>
+<p>Users connected:</p>
+
+<ul>
+  <li *ngFor="let user of connectedUsersList['usersData']">
+    {{user['name']}} {{user['surname']}}
+  </li>
+</ul>

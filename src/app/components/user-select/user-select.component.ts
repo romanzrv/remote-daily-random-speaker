@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserServiceService } from '../../services/user-service.service';
 import { CookieService } from 'ngx-cookie-service';
 import {MeetingServiceService} from '../../services/meeting-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-select',
@@ -14,7 +15,8 @@ export class UserSelectComponent implements OnInit {
 
   constructor(private userService: UserServiceService,
               private meetingService: MeetingServiceService,
-              private cookieService: CookieService) { }
+              private cookieService: CookieService,
+              private router: Router) { }
 
   ngOnInit() {
     this.userService.getAllUsers().subscribe((data) => {
@@ -30,7 +32,7 @@ export class UserSelectComponent implements OnInit {
   joinDaily() {
     this.meetingService.joinUserToTheMeeting(this.selectedUser).subscribe((data) => {
       this.setUserCookie();
-      console.log(data);
+      this.router.navigate(['/speaker-screen']);
     });
   }
 
