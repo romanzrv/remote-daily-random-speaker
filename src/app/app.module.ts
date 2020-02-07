@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { UserSelectComponent } from './components/user-select/user-select.component';
 import { SpeakerScreenComponent } from './components/speaker-screen/speaker-screen.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CookieService} from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
