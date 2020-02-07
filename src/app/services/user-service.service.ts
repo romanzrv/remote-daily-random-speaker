@@ -17,7 +17,4 @@ export class UserServiceService {
   getUser(userId) {
     return this.http.get(`${this.usersApiUrl}${userId}`);
   }
-
-  joinUserToTheDaily(userId) {
-  }
 }

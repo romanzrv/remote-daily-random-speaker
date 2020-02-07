@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 const app = express();
 
 const {mongoose} = require('./database');
@@ -7,10 +8,7 @@ const {mongoose} = require('./database');
 app.set('port', process.env.PORT || 3000);
 
 // Headers
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-});
+app.use(cors());
 
 // Middlewares
 app.use(express.json());
