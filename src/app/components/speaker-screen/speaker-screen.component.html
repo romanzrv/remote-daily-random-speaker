@@ -1,7 +1,12 @@
-<p>Users connected:</p>
+<div class="connected-users">
+  <p>Users connected:</p>
 
-<ul>
-  <li *ngFor="let user of connectedUsersList">
-    {{user['name']}} {{user['surname']}}
-  </li>
-</ul>
+  <ul>
+    <li *ngFor="let user of connectedUsersList">
+      {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span>
+    </li>
+  </ul>
+</div>
+<div class="current-speaker">
+  <h1>Waiting for the host...</h1>
+</div>

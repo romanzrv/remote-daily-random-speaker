@@ -9,8 +9,10 @@ socketController.startSocket = (server) => {
 
   io.sockets.on('connection', (socket) => {
     socketController.getConnectedUserInfo(socket.handshake.query.userId).then((userProfileInfo) => {
+      let parsedUserProfile = JSON.parse(userProfileInfo);
       if (!socketController.isUserAlreadyConnected(socket.handshake.query.userId)) {
-        socketConnectedUsers.push(JSON.parse(userProfileInfo));
+        socketController.checkIfHostUser(parsedUserProfile);
+        socketConnectedUsers.push(parsedUserProfile);
         io.emit('connectedUsers', socketConnectedUsers);
       }
     });
@@ -28,7 +30,15 @@ socketController.getConnectedUserInfo = async (connectedUserId) => {
 
 socketController.removeDisconnectedUser = (userId) => {
   socketConnectedUsers.forEach((value, index, object) => {
-    if (value['_id'] === userId) object.splice(index, 1);
+    if (value['_id'] === userId) {
+      if (value.host) {
+        delete value.host;
+        object.splice(index, 1);
+        socketController.addRandomHostUser();
+      } else {
+        object.splice(index, 1);
+      }
+    }
   });
 };
 
@@ -38,6 +48,16 @@ socketController.isUserAlreadyConnected = (userId) => {
     if (value._id === userId) isConnected = true;
   });
   return isConnected;
+};
+
+socketController.checkIfHostUser = (userProfile) => {
+  if (socketConnectedUsers.length === 0) {
+    userProfile.host = true;
+  }
+};
+
+socketController.addRandomHostUser = () => {
+  socketConnectedUsers[socketConnectedUsers.length - 1].host = true;
 };
 
 module.exports = socketController;
