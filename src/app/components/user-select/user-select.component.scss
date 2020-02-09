@@ -1,8 +1,11 @@
 .list-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 5% 40%;
+  align-items: center;
+
+  h1 {
+    font-weight: 200;
+  }
 
   ul {
     text-decoration: none;
@@ -13,7 +16,7 @@
     border-radius: 2px;
 
     li {
-      padding: 10px;
+      padding: 10px 50px;
       border-bottom: 1px solid gray;
       text-align: center;
 
@@ -39,13 +42,10 @@
     font-size: 16px;
     margin-top: 10px;
     border-radius: 2px;
+    width: 225px;
   }
 }
 
-.button-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-
+.selected-item {
+  background-color: #1071af;
 }

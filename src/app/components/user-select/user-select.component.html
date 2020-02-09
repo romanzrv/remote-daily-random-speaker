@@ -1,6 +1,7 @@
 <div class="list-container">
+  <h1>Select Your User</h1>
   <ul>
-    <li *ngFor="let user of usersList" (click)="selectUser(user['_id'])">
+    <li *ngFor="let user of usersList" (click)="selectUser(user['_id'], user)" [ngClass]="{'selected-item': user.active}">
       {{user['name']}} {{user['surname']}}
     </li>
   </ul>

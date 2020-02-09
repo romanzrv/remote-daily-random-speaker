@@ -14,7 +14,8 @@ export class UserSelectComponent implements OnInit {
 
   constructor(private userService: UserServiceService,
               private cookieService: CookieService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     if (this.getUserCookie() !== '') {
@@ -27,9 +28,15 @@ export class UserSelectComponent implements OnInit {
     }
   }
 
-  selectUser(userId) {
+  selectUser(userId, user) {
     this.selectedUser = userId;
     this.setUserCookie();
+
+    this.usersList.forEach((value) => {
+      value.active = false;
+    });
+
+    user.active = !user.active;
   }
 
   joinDaily() {
