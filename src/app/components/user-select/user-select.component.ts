@@ -19,16 +19,16 @@ export class UserSelectComponent implements OnInit {
   ngOnInit() {
     this.userService.getAllUsers().subscribe((data) => {
       this.usersList = data;
+      console.log(this.usersList);
     });
   }
 
   selectUser(userId) {
     this.selectedUser = userId;
-    console.log(this.selectedUser);
+    this.setUserCookie();
   }
 
   joinDaily() {
-    this.setUserCookie();
     this.router.navigate(['/speaker-screen']);
   }
 
