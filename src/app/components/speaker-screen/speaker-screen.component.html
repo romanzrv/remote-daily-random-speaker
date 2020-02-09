@@ -8,5 +8,8 @@
   </ul>
 </div>
 <div class="current-speaker">
-  <h1>Waiting for the host...</h1>
+  <h1 *ngIf="!isHostUser">Waiting for the host...</h1>
+  <h1 *ngIf="isHostUser">You are the host!</h1>
 </div>
+
+<p>{{currentConnectedUser['name']}} {{currentConnectedUser['surname']}}</p>

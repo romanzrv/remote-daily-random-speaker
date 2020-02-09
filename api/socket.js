@@ -57,7 +57,9 @@ socketController.checkIfHostUser = (userProfile) => {
 };
 
 socketController.addRandomHostUser = () => {
-  socketConnectedUsers[socketConnectedUsers.length - 1].host = true;
+  if (socketConnectedUsers[0]) {
+    socketConnectedUsers[0].host = true;
+  }
 };
 
 module.exports = socketController;

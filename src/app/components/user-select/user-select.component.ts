@@ -17,10 +17,15 @@ export class UserSelectComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.userService.getAllUsers().subscribe((data) => {
-      this.usersList = data;
-      console.log(this.usersList);
-    });
+
+    if (this.getUserCookie() !== '') {
+      this.router.navigate(['/speaker-screen']);
+    } else {
+      this.userService.getAllUsers().subscribe((data) => {
+        this.usersList = data;
+        console.log(this.usersList);
+      });
+    }
   }
 
   selectUser(userId) {
@@ -34,6 +39,10 @@ export class UserSelectComponent implements OnInit {
 
   setUserCookie() {
     this.cookieService.set('daily-user', this.selectedUser);
+  }
+
+  getUserCookie() {
+    return this.cookieService.get('daily-user');
   }
 
 }
