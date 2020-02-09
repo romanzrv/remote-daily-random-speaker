@@ -8,6 +8,8 @@ import { SpeakerScreenComponent } from './components/speaker-screen/speaker-scre
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService} from 'ngx-cookie-service';
 import { SocketioService} from './services/socketio.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatListModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -15,11 +17,13 @@ import { SocketioService} from './services/socketio.service';
     UserSelectComponent,
     SpeakerScreenComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatListModule
+    ],
   providers: [CookieService, SocketioService],
   bootstrap: [AppComponent]
 })
