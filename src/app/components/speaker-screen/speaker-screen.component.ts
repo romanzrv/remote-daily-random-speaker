@@ -16,14 +16,19 @@ export class SpeakerScreenComponent implements OnInit {
               private socketService: SocketioService) { }
 
   ngOnInit() {
+    this.socketService.setupSocketConnection(this.getCurrentUserId());
     this.getConnectedUsersList();
   }
 
   getConnectedUsersList() {
-    this.meetingService.getUsersOfMeeting().subscribe((usersList) => {
-      this.connectedUsersList = usersList;
-      this.socketService.setupSocketConnection();
+    this.socketService.currentConnectedUser.subscribe((connectedUsersData) => {
+      this.connectedUsersList = connectedUsersData;
+      console.log(this.connectedUsersList);
     });
+  }
+
+  getCurrentUserId() {
+    return this.cookieService.get('daily-user');
   }
 
 }

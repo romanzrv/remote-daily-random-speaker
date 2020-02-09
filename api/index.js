@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const socket = require('socket.io');
+const socketController = require('./socket');
 const app = express();
 
 const {mongoose} = require('./database');
@@ -23,14 +24,5 @@ const server = app.listen(app.get('port'), () => {
   console.log('Server started on port 3000.');
 });
 
-// Creating a socket events listener
-const io = socket.listen(server);
-
-io.sockets.on('connection', (socket) => {
-  //socket.emit('test', {test: 'testing connection'});
-  console.log('user connected to the socket');
-  socket.on('disconnect', () => {
-    console.log('user disconnected from the socket');
-  })
-});
-
+// Starting the socket connection
+socketController.startSocket(server);
