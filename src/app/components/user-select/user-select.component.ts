@@ -19,7 +19,7 @@ export class UserSelectComponent implements OnInit {
   ngOnInit() {
     if (this.getUserCookie() !== '') {
       this.router.navigate(['/speaker-screen']);
-    } else {
+    } else if (this.getUserCookie() === '') {
       this.userService.getAllUsers().subscribe((usersData) => {
         this.usersList = usersData;
         console.log(this.usersList);

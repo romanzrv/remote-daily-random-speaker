@@ -94,6 +94,11 @@ export class SpeakerScreenComponent implements OnInit {
     this.socketService.finishSpeaking(this.getCurrentUserId());
   }
 
+  changeUser() {
+    this.cookieService.set('daily-user', '');
+    this.router.navigate(['/user-select']);
+  }
+
   getCurrentUserId() {
     return this.cookieService.get('daily-user');
   }
