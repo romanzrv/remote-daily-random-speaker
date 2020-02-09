@@ -8,8 +8,24 @@
   </ul>
 </div>
 <div class="current-speaker">
-  <h1 *ngIf="!isHostUser">Waiting for the host...</h1>
-  <h1 *ngIf="isHostUser">You are the host!</h1>
-</div>
+  <p>Me: {{currentConnectedUser['name']}} {{currentConnectedUser['surname']}}</p>
+  <h1 *ngIf="!isHostUser && !meetingStarted && !meetingDone">Waiting for the host...</h1>
+  <h1 *ngIf="isHostUser && !meetingStarted && !meetingDone">
+    You are the host!
+    <button (click)="startDaily()">Start daily</button>
+  </h1>
 
-<p>{{currentConnectedUser['name']}} {{currentConnectedUser['surname']}}</p>
+  <div *ngIf="isMyTurn && meetingStarted">
+    <p>It's your turn to speak!</p>
+    <button (click)="finishSpeaking()">Finish talking</button>
+  </div>
+
+  <div *ngIf="!isMyTurn && meetingStarted">
+    <p>{{currentSpeaker['name']}} {{currentSpeaker['surname']}} is taking</p>
+  </div>
+
+  <div *ngIf="meetingDone">
+    <h1>Meeting Done! Bye!</h1>
+  </div>
+
+</div>

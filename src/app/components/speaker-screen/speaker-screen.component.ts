@@ -13,6 +13,10 @@ export class SpeakerScreenComponent implements OnInit {
   private connectedUsersList: any;
   private currentConnectedUser: any;
   private isHostUser = false;
+  private isMyTurn = false;
+  private meetingStarted: any;
+  private currentSpeaker: any;
+  private meetingDone: any;
 
   constructor(private cookieService: CookieService,
               private socketService: SocketioService,
@@ -39,6 +43,8 @@ export class SpeakerScreenComponent implements OnInit {
     this.userService.getUser(this.getCurrentUserId()).subscribe((userProfile) => {
       this.currentConnectedUser = userProfile;
       this.checkIfHostUser();
+      this.getDailyStatus();
+      this.getNextSpeaker();
     });
   }
 
@@ -51,6 +57,41 @@ export class SpeakerScreenComponent implements OnInit {
         }
       }
     }
+  }
+
+  startDaily() {
+    if (this.isHostUser) {
+      this.socketService.emitStartDailyEvent();
+    }
+  }
+
+  getDailyStatus() {
+    this.socketService.meetingStatus.subscribe((currentDailyStatus) => {
+      this.meetingStarted = currentDailyStatus;
+      if (this.meetingStarted === 'finished') {
+        this.meetingStarted = false;
+        this.meetingDone = true;
+      }
+    });
+  }
+
+  getNextSpeaker() {
+    this.socketService.currentSpeaker.subscribe((speakerId) => {
+      console.log(`my id: ${this.getCurrentUserId()}`);
+      console.log(`next speaker: ${speakerId}`);
+      if (speakerId === this.getCurrentUserId()) {
+        this.isMyTurn = true;
+      } else {
+        this.userService.getUser(speakerId).subscribe((userData) => {
+          this.currentSpeaker = userData;
+        });
+      }
+    });
+  }
+
+  finishSpeaking() {
+    this.isMyTurn = false;
+    this.socketService.finishSpeaking(this.getCurrentUserId());
   }
 
   getCurrentUserId() {

@@ -2,7 +2,11 @@ const socket = require('socket.io');
 const userModel = require("./models/user.model");
 
 const socketController = {};
-const socketConnectedUsers = [];
+socketController.dailySpeakers = [];
+
+let socketConnectedUsers = [];
+let finishedSpeakers = [];
+let isMeetingEventStarted = false;
 
 socketController.startSocket = (server) => {
   const io = socket.listen(server);
@@ -16,10 +20,28 @@ socketController.startSocket = (server) => {
         io.emit('connectedUsers', socketConnectedUsers);
       }
     });
+
     socket.on('disconnect', () => {
       socketController.removeDisconnectedUser(socket.handshake.query.userId);
       io.emit('connectedUsers', socketConnectedUsers);
-    })
+    });
+
+    socket.on('startDaily', (receivedData) => {
+      socketController.dailySpeakers = socketConnectedUsers;
+      isMeetingEventStarted = true;
+      io.emit('dailyStatus', true);
+      io.emit('nextSpeaker', socketController.getRandomSpeaker());
+    });
+
+    socket.on('nextSpeaker', (userId) => {
+      socketController.dailySpeakers = socketController.finishSpeaker(userId);
+      if (socketController.checkIfMeetingIsDone(socketController.dailySpeakers)) {
+        io.emit('dailyStatus', 'finished');
+        socketController.finishMeeting();
+      } else {
+        io.emit('nextSpeaker', socketController.getRandomSpeaker());
+      }
+    });
   });
 };
 
@@ -60,6 +82,30 @@ socketController.addRandomHostUser = () => {
   if (socketConnectedUsers[0]) {
     socketConnectedUsers[0].host = true;
   }
+};
+
+socketController.finishSpeaker = (speakerId) => {
+  finishedSpeakers.push(speakerId);
+  socketController.dailySpeakers.forEach((value, index, object) => {
+    if (value._id === speakerId) {
+      object.splice(index, 1);
+    }
+  });
+  return socketController.dailySpeakers;
+};
+
+socketController.getRandomSpeaker = () => {
+  let randomArrayIndex = Math.floor(Math.random() * socketController.dailySpeakers.length) + 1;
+  return socketController.dailySpeakers[randomArrayIndex - 1]._id;
+};
+
+socketController.checkIfMeetingIsDone = (dailyMeetingArray) => {
+  return (dailyMeetingArray.length === 0);
+};
+
+socketController.finishMeeting = () => {
+  socketConnectedUsers = [];
+  finishedSpeakers = [];
 };
 
 module.exports = socketController;
