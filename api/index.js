@@ -17,7 +17,6 @@ app.use(express.json());
 
 // Routes
 app.use('/api/users', require('./routes/user.route'));
-app.use('/api/meeting', require('./routes/meeting.route'));
 
 // Starting the server
 const server = app.listen(app.get('port'), () => {

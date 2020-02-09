@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { MeetingServiceService } from '../../services/meeting-service.service';
 import { CookieService } from 'ngx-cookie-service';
 import { SocketioService } from '../../services/socketio.service';
 
@@ -11,8 +10,7 @@ import { SocketioService } from '../../services/socketio.service';
 export class SpeakerScreenComponent implements OnInit {
   private connectedUsersList: any;
 
-  constructor(private meetingService: MeetingServiceService,
-              private cookieService: CookieService,
+  constructor(private cookieService: CookieService,
               private socketService: SocketioService) { }
 
   ngOnInit() {
