@@ -9,16 +9,16 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class SocketioService {
 
-  private connectedUsersSource = new BehaviorSubject('');
-  public currentConnectedUser = this.connectedUsersSource.asObservable();
+  connectedUsersSource = new BehaviorSubject('');
+  currentConnectedUser = this.connectedUsersSource.asObservable();
 
-  private meetingStatusSource = new BehaviorSubject('');
-  public meetingStatus = this.meetingStatusSource.asObservable();
+  meetingStatusSource = new BehaviorSubject('');
+  meetingStatus = this.meetingStatusSource.asObservable();
 
-  private speakerIdSource = new BehaviorSubject('');
-  public currentSpeaker = this.speakerIdSource.asObservable();
+  speakerIdSource = new BehaviorSubject('');
+  currentSpeaker = this.speakerIdSource.asObservable();
 
-  private socket;
+  socket;
 
   constructor() { }
 

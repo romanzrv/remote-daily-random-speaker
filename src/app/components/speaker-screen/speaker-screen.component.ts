@@ -10,13 +10,13 @@ import {UserServiceService} from '../../services/user-service.service';
   styleUrls: ['./speaker-screen.component.scss']
 })
 export class SpeakerScreenComponent implements OnInit {
-  private connectedUsersList: any;
-  private currentConnectedUser: any;
-  private isHostUser = false;
-  private isMyTurn = false;
-  private meetingStarted: any;
-  private currentSpeaker: any;
-  private meetingDone: any;
+  connectedUsersList: any;
+  currentConnectedUser: any;
+  isHostUser = false;
+  isMyTurn = false;
+  meetingStarted: any;
+  currentSpeaker: any;
+  meetingDone: any;
 
   constructor(private cookieService: CookieService,
               private socketService: SocketioService,
