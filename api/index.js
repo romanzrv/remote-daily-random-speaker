@@ -18,6 +18,9 @@ app.use(express.json());
 // Routes
 app.use('/api/users', require('./routes/user.route'));
 
+// Serving static content
+app.use(express.static('public'));
+
 // Starting the server
 const server = app.listen(app.get('port'), () => {
   console.log('Server started on port 3000.');
