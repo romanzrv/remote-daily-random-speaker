@@ -77,8 +77,6 @@ export class SpeakerScreenComponent implements OnInit {
 
   getNextSpeaker() {
     this.socketService.currentSpeaker.subscribe((speakerId) => {
-      console.log(`my id: ${this.getCurrentUserId()}`);
-      console.log(`next speaker: ${speakerId}`);
       if (speakerId === this.getCurrentUserId()) {
         this.isMyTurn = true;
       } else {

@@ -23,7 +23,6 @@ export class UserSelectComponent implements OnInit {
     } else if (this.getUserCookie() === '') {
       this.userService.getAllUsers().subscribe((usersData) => {
         this.usersList = usersData;
-        console.log(this.usersList);
       });
     }
   }
