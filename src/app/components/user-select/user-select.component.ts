@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-select.component.scss']
 })
 export class UserSelectComponent implements OnInit {
-  private usersList: any;
-  private selectedUser: any;
+  usersList: any;
+  selectedUser: any;
 
   constructor(private userService: UserServiceService,
               private cookieService: CookieService,
