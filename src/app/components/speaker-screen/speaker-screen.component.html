@@ -1,33 +1,34 @@
-<div class="connected-users">
-  <p>Users connected:</p>
+<div class="container">
+  <div class="connected-users">
+    <p>Users connected:</p>
+    <ul>
+      <li *ngFor="let user of connectedUsersList">
+        {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span>
+      </li>
+    </ul>
+  </div>
+  <div class="current-speaker">
+    <p><b>Me:</b> {{currentConnectedUser['name']}} {{currentConnectedUser['surname']}}</p>
+    <p (click)="changeUser()">[Change user]</p>
 
-  <ul>
-    <li *ngFor="let user of connectedUsersList">
-      {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span>
-    </li>
-  </ul>
+    <div class="speaking-status">
+      <h1 *ngIf="!isHostUser && !meetingStarted && !meetingDone">Waiting for the host...</h1>
+      <h1 *ngIf="isHostUser && !meetingStarted && !meetingDone">You are the host!</h1>
+      <button class="start-daily-btn" (click)="startDaily()" *ngIf="isHostUser && !meetingStarted && !meetingDone">Start daily</button>
+
+      <div *ngIf="isMyTurn && meetingStarted">
+        <h1>It's your turn to speak!</h1>
+        <button class="finish-speaking-btn" (click)="finishSpeaking()">Finish talking</button>
+      </div>
+
+      <div *ngIf="!isMyTurn && meetingStarted">
+        <h1>{{currentSpeaker['name']}} {{currentSpeaker['surname']}} is speaking</h1>
+      </div>
+
+      <div *ngIf="meetingDone">
+        <h1>Meeting Done! Bye!</h1>
+      </div>
+    </div>
+
+  </div>
 </div>
-<div class="current-speaker">
-  <p>Me: {{currentConnectedUser['name']}} {{currentConnectedUser['surname']}}</p>
-  <h1 *ngIf="!isHostUser && !meetingStarted && !meetingDone">Waiting for the host...</h1>
-  <h1 *ngIf="isHostUser && !meetingStarted && !meetingDone">
-    You are the host!
-    <button (click)="startDaily()">Start daily</button>
-  </h1>
-
-  <div *ngIf="isMyTurn && meetingStarted">
-    <p>It's your turn to speak!</p>
-    <button (click)="finishSpeaking()">Finish talking</button>
-  </div>
-
-  <div *ngIf="!isMyTurn && meetingStarted">
-    <p>{{currentSpeaker['name']}} {{currentSpeaker['surname']}} is speaking</p>
-  </div>
-
-  <div *ngIf="meetingDone">
-    <h1>Meeting Done! Bye!</h1>
-  </div>
-
-</div>
-
-<button (click)="changeUser()">Change user</button>

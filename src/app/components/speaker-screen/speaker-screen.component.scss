@@ -1,0 +1,101 @@
+@mixin buttonsStyle($background-color, $text-color) {
+  background-color: $background-color;
+  border: none;
+  color: $text-color;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 10px;
+  border-radius: 2px;
+  width: 225px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+
+  .connected-users {
+    background-color: gray;
+    padding: 15px 30px;
+    text-align: center;
+
+    p {
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    ul {
+      text-decoration: none;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        font-weight: 200;
+      }
+    }
+  }
+
+  .current-speaker {
+    background-color: darkcyan;
+    flex-grow: 1;
+
+    p {
+      &:nth-child(1) {
+        text-align: right;
+        font-weight: 200;
+        font-size: 14px;
+        padding: 10px 10px 0 0;
+        margin: 0;
+      }
+
+      &:nth-child(2) {
+        text-align: right;
+        font-weight: 700;
+        font-size: 12px;
+        padding: 0 10px 0 0;
+        margin: 0;
+        text-transform: uppercase;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .speaking-status {
+      height: calc(100% - 50px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      box-sizing: border-box;
+
+      h1 {
+        font-weight: 200;
+        font-size: 50px;
+      }
+    }
+  }
+}
+
+.start-daily-btn {
+  @include buttonsStyle(#1071af, white);
+}
+
+.finish-speaking-btn {
+  @include buttonsStyle(#b54739, white);
+}
+
+.change-user-btn {
+
+}

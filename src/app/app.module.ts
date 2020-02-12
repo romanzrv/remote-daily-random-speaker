@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CookieService} from 'ngx-cookie-service';
 import { SocketioService} from './services/socketio.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatListModule} from '@angular/material';
+import {MatListModule, MatSidenavModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,8 @@ import {MatListModule} from '@angular/material';
         AppRoutingModule,
         HttpClientModule,
         BrowserAnimationsModule,
-        MatListModule
+        MatListModule,
+        MatSidenavModule
     ],
   providers: [CookieService, SocketioService],
   bootstrap: [AppComponent]
