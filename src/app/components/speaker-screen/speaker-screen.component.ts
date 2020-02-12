@@ -96,6 +96,7 @@ export class SpeakerScreenComponent implements OnInit {
 
   changeUser() {
     this.cookieService.set('daily-user', '');
+    this.socketService.disconnectCurrentUser();
     this.router.navigate(['/user-select']);
   }
 

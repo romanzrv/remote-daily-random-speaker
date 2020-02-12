@@ -47,4 +47,8 @@ export class SocketioService {
   finishSpeaking(lastSpeakerId) {
     this.socket.emit('nextSpeaker', lastSpeakerId);
   }
+
+  disconnectCurrentUser() {
+    this.socket.emit('disconnectCurrentUser', true);
+  }
 }

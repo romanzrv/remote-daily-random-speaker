@@ -26,6 +26,12 @@ socketController.startSocket = (server) => {
       io.emit('connectedUsers', socketConnectedUsers);
     });
 
+    socket.on('disconnectCurrentUser', () => {
+      socketController.removeDisconnectedUser(socket.handshake.query.userId);
+      socket.disconnect();
+      io.emit('connectedUsers', socketConnectedUsers);
+    });
+
     socket.on('startDaily', (receivedData) => {
       socketController.dailySpeakers = socketConnectedUsers;
       isMeetingEventStarted = true;
