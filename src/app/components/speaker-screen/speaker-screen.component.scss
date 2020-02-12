@@ -22,7 +22,8 @@
   height: 100%;
 
   .connected-users {
-    background-color: gray;
+    background-color: rgba(103, 136, 140, 0.85);
+    border-right: 1px solid #92aba7;
     padding: 15px 30px;
     text-align: center;
 
@@ -45,7 +46,7 @@
   }
 
   .current-speaker {
-    background-color: darkcyan;
+    background-color: rgba(107, 152, 172, 0.48);
     flex-grow: 1;
 
     p {
