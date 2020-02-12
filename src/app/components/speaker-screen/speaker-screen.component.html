@@ -1,6 +1,6 @@
 <div class="container">
   <div class="connected-users">
-    <p>Users connected:</p>
+    <p>Users connected ({{connectedUsersList.length}}):</p>
     <ul>
       <li *ngFor="let user of connectedUsersList">
         {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span>
