@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserServiceService {
 
-  usersApiUrl = 'http://localhost:3000/api/users/';
+  usersApiUrl = `http://${environment.HOST_URL}:3000/api/users/`;
 
   constructor(private http: HttpClient) { }
 

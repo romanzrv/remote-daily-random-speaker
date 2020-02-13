@@ -110,7 +110,6 @@ socketController.checkIfMeetingIsDone = (dailyMeetingArray) => {
 };
 
 socketController.finishMeeting = () => {
-  socketConnectedUsers = [];
   finishedSpeakers = [];
 };
 
