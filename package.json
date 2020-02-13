@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-prod": "source ~/.bash_profile && ng build --prod"
+    "build-prod": "source ~/.bash_profile && ng build --prod",
+    "serve": "source ~/.bash_profile && ng serve"
   },
   "private": true,
   "dependencies": {
