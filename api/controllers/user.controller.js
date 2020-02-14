@@ -1,6 +1,9 @@
 // User database model
 const UserModel = require('../models/user.model');
 
+// Socket controller
+const socketIoController = require('../socket');
+
 // User controller object
 const userController = {};
 
@@ -28,6 +31,15 @@ userController.getUsers = async (req, res) => {
   try {
     const users = await UserModel.find();
     res.status(201).json(users);
+  } catch (e) {
+    res.status(400).json({status: 400, message: 'Operation cannot be executed.'});
+  }
+};
+
+userController.checkIfUserAlreadyConnectedToDaily = (req, res) => {
+  try {
+    let isUserConnected = socketIoController.isUserAlreadyConnected(req.params.id);
+    res.status(201).json(isUserConnected);
   } catch (e) {
     res.status(400).json({status: 400, message: 'Operation cannot be executed.'});
   }

@@ -46,7 +46,7 @@ export class UserSelectComponent implements OnInit {
     if (this.getUserCookie() === '') {
       this.showMessageSnackBar('User not selected!', 'OK');
     } else {
-      this.router.navigate(['/speaker-screen']);
+      this.checkIfUserAlreadyConnected(this.getUserCookie());
     }
   }
 
@@ -61,6 +61,16 @@ export class UserSelectComponent implements OnInit {
   showMessageSnackBar(message, action) {
     this.snackBar.open(message, action, {
       duration: 3000,
+    });
+  }
+
+  checkIfUserAlreadyConnected(userId) {
+    this.userService.checkIfUserAlreadyConnected(userId).subscribe((isConnected) => {
+      if (isConnected) {
+        this.showMessageSnackBar('This user is already connected!', 'OK');
+      } else {
+        this.router.navigate(['/speaker-screen']);
+      }
     });
   }
 }

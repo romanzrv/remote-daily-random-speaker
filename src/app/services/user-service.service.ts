@@ -18,4 +18,8 @@ export class UserServiceService {
   getUser(userId) {
     return this.http.get(`${this.usersApiUrl}${userId}`);
   }
+
+  checkIfUserAlreadyConnected(userId) {
+    return this.http.get(`${this.usersApiUrl}connected/${userId}`);
+  }
 }
