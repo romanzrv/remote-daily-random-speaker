@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserServiceService } from '../../services/user-service.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import {MatSnackBar} from '@angular/material';
+import {SocketioService} from '../../services/socketio.service';
 
 @Component({
   selector: 'app-user-select',
@@ -14,7 +16,9 @@ export class UserSelectComponent implements OnInit {
 
   constructor(private userService: UserServiceService,
               private cookieService: CookieService,
-              private router: Router) {
+              private router: Router,
+              private snackBar: MatSnackBar,
+              private socketioService: SocketioService) {
   }
 
   ngOnInit() {
@@ -39,7 +43,11 @@ export class UserSelectComponent implements OnInit {
   }
 
   joinDaily() {
-    this.router.navigate(['/speaker-screen']);
+    if (this.getUserCookie() === '') {
+      this.showMessageSnackBar('User not selected!', 'OK');
+    } else {
+      this.router.navigate(['/speaker-screen']);
+    }
   }
 
   setUserCookie() {
@@ -50,4 +58,9 @@ export class UserSelectComponent implements OnInit {
     return this.cookieService.get('daily-user');
   }
 
+  showMessageSnackBar(message, action) {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+    });
+  }
 }
