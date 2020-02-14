@@ -9,7 +9,7 @@ let finishedSpeakers = [];
 let isMeetingEventStarted = false;
 
 socketController.startSocket = (server) => {
-  const io = socket.listen(server);
+  const io = socket.listen(server, { pingTimeout: 40000000, pingInterval: 40000000 });
 
   io.sockets.on('connection', (socket) => {
     socketController.getConnectedUserInfo(socket.handshake.query.userId).then((userProfileInfo) => {
