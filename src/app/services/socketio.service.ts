@@ -51,4 +51,8 @@ export class SocketioService {
   disconnectCurrentUser() {
     this.socket.emit('disconnectCurrentUser', true);
   }
+
+  getCurrentSpeaker() {
+    this.socket.emit('currentSpeaker', true);
+  }
 }

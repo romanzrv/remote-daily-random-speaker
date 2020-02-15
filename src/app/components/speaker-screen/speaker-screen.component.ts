@@ -27,13 +27,14 @@ export class SpeakerScreenComponent implements OnInit {
     if (this.getCurrentUserId() === '') {
       this.router.navigate(['/user-select']);
     } else {
+      this.checkIfMeetingStarted();
       this.socketService.setupSocketConnection(this.getCurrentUserId());
       this.getConnectedUsersList();
     }
   }
 
   getConnectedUsersList() {
-    this.socketService.currentConnectedUser.subscribe((connectedUsersData) => {
+    this.socketService.currentConnectedUser.subscribe((connectedUsersData: any) => {
       this.connectedUsersList = connectedUsersData;
       this.getCurrentUser();
     });
@@ -100,6 +101,15 @@ export class SpeakerScreenComponent implements OnInit {
 
   getCurrentUserId() {
     return this.cookieService.get('daily-user');
+  }
+
+  checkIfMeetingStarted() {
+    this.userService.checkIfCurrentMeetingStarted().subscribe((isStarted) => {
+      this.meetingStarted = isStarted;
+      if (this.meetingStarted) {
+        this.socketService.getCurrentSpeaker();
+      }
+    });
   }
 
 }

@@ -22,4 +22,8 @@ export class UserServiceService {
   checkIfUserAlreadyConnected(userId) {
     return this.http.get(`${this.usersApiUrl}connected/${userId}`);
   }
+
+  checkIfCurrentMeetingStarted() {
+    return this.http.get(`${this.usersApiUrl}meeting/started/`);
+  }
 }

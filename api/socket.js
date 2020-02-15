@@ -3,10 +3,11 @@ const userModel = require("./models/user.model");
 
 const socketController = {};
 socketController.dailySpeakers = [];
+socketController.isMeetingEventStarted = false;
 
 let socketConnectedUsers = [];
 let finishedSpeakers = [];
-let isMeetingEventStarted = false;
+let currentSpeaker = '';
 
 socketController.startSocket = (server) => {
   const io = socket.listen(server, { pingTimeout: 40000000, pingInterval: 40000000 });
@@ -17,12 +18,22 @@ socketController.startSocket = (server) => {
       if (!socketController.isUserAlreadyConnected(socket.handshake.query.userId)) {
         socketController.checkIfHostUser(parsedUserProfile);
         socketConnectedUsers.push(parsedUserProfile);
+        io.emit('dailyStatus', socketController.isMeetingEventStarted);
+        if (socketController.isMeetingEventStarted) {
+          if (!socketController.checkIfUserHasAlreadySpoken(parsedUserProfile['_id'])) {
+            socketController.dailySpeakers.push(parsedUserProfile);
+          }
+        }
+
         io.emit('connectedUsers', socketConnectedUsers);
       }
     });
 
     socket.on('disconnect', () => {
       socketController.removeDisconnectedUser(socket.handshake.query.userId);
+      if (currentSpeaker === socket.handshake.query.userId) {
+        io.emit('nextSpeaker', socketController.getRandomSpeaker());
+      }
       io.emit('connectedUsers', socketConnectedUsers);
     });
 
@@ -33,8 +44,8 @@ socketController.startSocket = (server) => {
     });
 
     socket.on('startDaily', (receivedData) => {
-      socketController.dailySpeakers = socketConnectedUsers;
-      isMeetingEventStarted = true;
+      socketController.dailySpeakers = JSON.parse(JSON.stringify(socketConnectedUsers))
+      socketController.isMeetingEventStarted = true;
       io.emit('dailyStatus', true);
       io.emit('nextSpeaker', socketController.getRandomSpeaker());
     });
@@ -47,6 +58,10 @@ socketController.startSocket = (server) => {
       } else {
         io.emit('nextSpeaker', socketController.getRandomSpeaker());
       }
+    });
+
+    socket.on('currentSpeaker', () => {
+      io.emit('nextSpeaker', currentSpeaker);
     });
   });
 };
@@ -68,6 +83,14 @@ socketController.removeDisconnectedUser = (userId) => {
       }
     }
   });
+
+  if (socketController.isMeetingEventStarted) {
+    socketController.dailySpeakers.forEach((value, index, object) => {
+      if (value['_id'] === userId) {
+        object.splice(index, 1);
+      }
+    });
+  }
 };
 
 socketController.isUserAlreadyConnected = (userId) => {
@@ -102,7 +125,8 @@ socketController.finishSpeaker = (speakerId) => {
 
 socketController.getRandomSpeaker = () => {
   let randomArrayIndex = Math.floor(Math.random() * socketController.dailySpeakers.length) + 1;
-  return socketController.dailySpeakers[randomArrayIndex - 1]._id;
+  currentSpeaker = socketController.dailySpeakers[randomArrayIndex - 1]._id;
+  return currentSpeaker;
 };
 
 socketController.checkIfMeetingIsDone = (dailyMeetingArray) => {
@@ -111,6 +135,16 @@ socketController.checkIfMeetingIsDone = (dailyMeetingArray) => {
 
 socketController.finishMeeting = () => {
   finishedSpeakers = [];
+};
+
+socketController.checkIfUserHasAlreadySpoken = (userId) => {
+  let hasSpoken = false;
+  finishedSpeakers.forEach((value) => {
+    if (value === userId) {
+      hasSpoken = true;
+    }
+  });
+  return hasSpoken;
 };
 
 module.exports = socketController;
