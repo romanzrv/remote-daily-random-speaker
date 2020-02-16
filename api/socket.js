@@ -25,7 +25,6 @@ socketController.startSocket = (server) => {
             socketController.dailySpeakers.push(parsedUserProfile);
           }
         }
-
         io.emit('connectedUsers', socketConnectedUsers);
       } else {
         io.emit('connectionStatus', {userId: socket.handshake.query.userId, action: 'reconnect'});
@@ -34,7 +33,7 @@ socketController.startSocket = (server) => {
 
     socket.on('disconnect', () => {
       socketController.removeDisconnectedUser(socket.handshake.query.userId);
-      if (currentSpeaker === socket.handshake.query.userId) {
+      if (currentSpeaker === socket.handshake.query.userId && socketController.dailySpeakers.length > 0) {
         io.emit('nextSpeaker', socketController.getRandomSpeaker());
       }
       io.emit('connectedUsers', socketConnectedUsers);
@@ -89,29 +88,17 @@ socketController.removeDisconnectedUser = (userId) => {
   });
 
   if (socketController.isMeetingEventStarted) {
-    socketController.dailySpeakers.forEach((value, index, object) => {
-      if (value['_id'] === userId) {
-        object.splice(index, 1);
-      }
-    });
+    socketController.dailySpeakers = socketController.dailySpeakers.filter((item) => item['_id'] !== userId);
   }
 };
 
 socketController.isUserAlreadyConnected = (userId) => {
-  let isConnected = false;
-  socketConnectedUsers.forEach((value) => {
-    if (value._id === userId) isConnected = true;
-  });
-  return isConnected;
+  return (socketConnectedUsers.filter((item) => item._id === userId).length > 0);
 };
 
 socketController.checkIfHostUser = (userProfile) => {
   if (!isHostUserConnected) {
-    let isHost = false;
-    socketConnectedUsers.forEach((value) => {
-      if (value.host) isHost = true;
-    });
-    if (!isHost) {
+    if (!socketConnectedUsers.filter((item) => item.host).length > 0) {
       userProfile.host = true;
       isHostUserConnected = true;
     }
@@ -129,11 +116,7 @@ socketController.addRandomHostUser = () => {
 
 socketController.finishSpeaker = (speakerId) => {
   finishedSpeakers.push(speakerId);
-  socketController.dailySpeakers.forEach((value, index, object) => {
-    if (value._id === speakerId) {
-      object.splice(index, 1);
-    }
-  });
+  socketController.dailySpeakers = socketController.dailySpeakers.filter((item) => item._id !== speakerId);
   return socketController.dailySpeakers;
 };
 
@@ -149,16 +132,15 @@ socketController.checkIfMeetingIsDone = (dailyMeetingArray) => {
 
 socketController.finishMeeting = () => {
   finishedSpeakers = [];
+  socketConnectedUsers = [];
+  socketController.dailySpeakers = [];
+  socketController.isMeetingEventStarted = false;
+  isHostUserConnected = false;
+  currentSpeaker = '';
 };
 
 socketController.checkIfUserHasAlreadySpoken = (userId) => {
-  let hasSpoken = false;
-  finishedSpeakers.forEach((value) => {
-    if (value === userId) {
-      hasSpoken = true;
-    }
-  });
-  return hasSpoken;
+  return (finishedSpeakers.filter((item) => item === userId).length > 0);
 };
 
 module.exports = socketController;
