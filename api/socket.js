@@ -27,6 +27,8 @@ socketController.startSocket = (server) => {
         }
 
         io.emit('connectedUsers', socketConnectedUsers);
+      } else {
+        io.emit('connectionStatus', {userId: socket.handshake.query.userId, action: 'reconnect'});
       }
     });
 

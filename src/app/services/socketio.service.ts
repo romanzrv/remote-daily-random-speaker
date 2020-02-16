@@ -18,6 +18,9 @@ export class SocketioService {
   speakerIdSource = new BehaviorSubject('');
   currentSpeaker = this.speakerIdSource.asObservable();
 
+  connectionStatusSource = new BehaviorSubject('');
+  connectionStatus = this.connectionStatusSource.asObservable();
+
   socket;
 
   constructor() { }
@@ -37,6 +40,10 @@ export class SocketioService {
 
     this.socket.on('dailyStatus', (dailyStatus) => {
       this.meetingStatusSource.next(dailyStatus);
+    });
+
+    this.socket.on('connectionStatus', (connectionStatus) => {
+      this.connectionStatusSource.next(connectionStatus);
     });
   }
 

@@ -27,6 +27,7 @@ export class SpeakerScreenComponent implements OnInit {
     if (this.getCurrentUserId() === '') {
       this.router.navigate(['/user-select']);
     } else {
+      this.checkConnectionStatus();
       this.checkIfMeetingStarted();
       this.socketService.setupSocketConnection(this.getCurrentUserId());
       this.getConnectedUsersList();
@@ -108,6 +109,15 @@ export class SpeakerScreenComponent implements OnInit {
       this.meetingStarted = isStarted;
       if (this.meetingStarted) {
         this.socketService.getCurrentSpeaker();
+      }
+    });
+  }
+
+  checkConnectionStatus() {
+    this.socketService.connectionStatus.subscribe((connectionStatus: any) => {
+      if (connectionStatus.action === 'reconnect' && connectionStatus.userId === this.getCurrentUserId()) {
+        this.cookieService.set('daily-user', '');
+        this.router.navigate(['/user-select']);
       }
     });
   }
