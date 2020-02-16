@@ -8,6 +8,7 @@ socketController.isMeetingEventStarted = false;
 let socketConnectedUsers = [];
 let finishedSpeakers = [];
 let currentSpeaker = '';
+let isHostUserConnected = false;
 
 socketController.startSocket = (server) => {
   const io = socket.listen(server, { pingTimeout: 40000000, pingInterval: 40000000 });
@@ -76,6 +77,7 @@ socketController.removeDisconnectedUser = (userId) => {
     if (value['_id'] === userId) {
       if (value.host) {
         delete value.host;
+        isHostUserConnected = false;
         object.splice(index, 1);
         socketController.addRandomHostUser();
       } else {
@@ -102,14 +104,24 @@ socketController.isUserAlreadyConnected = (userId) => {
 };
 
 socketController.checkIfHostUser = (userProfile) => {
-  if (socketConnectedUsers.length === 0) {
-    userProfile.host = true;
+  if (!isHostUserConnected) {
+    let isHost = false;
+    socketConnectedUsers.forEach((value) => {
+      if (value.host) isHost = true;
+    });
+    if (!isHost) {
+      userProfile.host = true;
+      isHostUserConnected = true;
+    }
   }
 };
 
 socketController.addRandomHostUser = () => {
-  if (socketConnectedUsers[0]) {
-    socketConnectedUsers[0].host = true;
+  if (!isHostUserConnected) {
+    if (socketConnectedUsers[0]) {
+      socketConnectedUsers[0].host = true;
+      isHostUserConnected = true;
+    }
   }
 };
 
