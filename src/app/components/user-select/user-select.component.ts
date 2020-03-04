@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import {MatSnackBar} from '@angular/material';
 import {SocketioService} from '../../services/socketio.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-select',
@@ -51,7 +52,8 @@ export class UserSelectComponent implements OnInit {
   }
 
   setUserCookie() {
-    this.cookieService.set('daily-user', this.selectedUser);
+    console.log('cookie');
+    this.cookieService.set('daily-user', this.selectedUser, 5, '/', environment.HOST_URL, false, 'Strict');
   }
 
   getUserCookie() {
