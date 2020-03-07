@@ -82,8 +82,14 @@ addRandomHostUser = () => {
   }
 };
 
-finishSpeaker = (speakerId) => {
+finishSpeaker = (speakerId, io) => {
   finishedSpeakers.push(speakerId);
+  socketConnectedUsers = socketConnectedUsers.map((item) => {
+    if (item._id === speakerId) {
+      item.hasSpoken = true;
+    }
+    return item;
+  });
   dailySpeakers = dailySpeakers.filter((item) => item._id !== speakerId);
   return dailySpeakers;
 };
@@ -152,7 +158,8 @@ startDailyMeeting = (socket, io) => {
 };
 
 getNextSpeaker = (socket, io, userId) => {
-  dailySpeakers = finishSpeaker(userId);
+  dailySpeakers = finishSpeaker(userId, io);
+  io.emit('connectedUsers', socketConnectedUsers);
   if (checkIfMeetingIsDone(dailySpeakers)) {
     io.emit('dailyStatus', 'finished');
     finishMeeting();

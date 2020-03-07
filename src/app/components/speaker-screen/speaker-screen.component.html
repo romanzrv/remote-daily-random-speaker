@@ -2,7 +2,7 @@
   <div class="connected-users">
     <p>Users connected ({{connectedUsersList.length}}):</p>
     <ul>
-      <li *ngFor="let user of connectedUsersList">
+      <li *ngFor="let user of connectedUsersList" [ngClass]="{'has-spoken': user['hasSpoken']}">
         {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span>
       </li>
     </ul>
