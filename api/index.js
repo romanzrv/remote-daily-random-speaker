@@ -1,9 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const socket = require('socket.io');
 const socketController = require('./socket');
 const app = express();
-
 const {mongoose} = require('./database');
 
 // Settings
@@ -17,9 +15,6 @@ app.use(express.json());
 
 // Routes
 app.use('/api/users', require('./routes/user.route'));
-
-// Serving static content
-app.use(express.static('public'));
 
 // Starting the server
 const server = app.listen(app.get('port'), () => {
