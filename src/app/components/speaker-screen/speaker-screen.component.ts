@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { SocketioService } from '../../services/socketio.service';
 import {Router} from '@angular/router';
 import {UserServiceService} from '../../services/user-service.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-speaker-screen',
@@ -95,7 +96,7 @@ export class SpeakerScreenComponent implements OnInit {
   }
 
   changeUser() {
-    this.cookieService.set('daily-user', '');
+    this.cookieService.set('daily-user', '', 5, '/', environment.HOST_URL, false, 'Strict');
     this.socketService.disconnectCurrentUser();
     this.router.navigate(['/user-select']);
   }
