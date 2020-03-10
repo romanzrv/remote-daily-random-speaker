@@ -47,7 +47,7 @@ userController.checkIfUserAlreadyConnectedToDaily = (req, res) => {
 
 userController.checkIfMeetingStarted = (req, res) => {
   try {
-    let isMeetingStarted = socketIoController.isMeetingEventStarted;
+    let isMeetingStarted = socketIoController.getMeetingStatus();
     res.status(201).json(isMeetingStarted);
   } catch (e) {
     res.status(400).json({status: 400, message: 'Operation cannot be executed ddd.'});

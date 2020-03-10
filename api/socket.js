@@ -172,6 +172,10 @@ getCurrentSpeaker = (io) => {
   io.emit('nextSpeaker', currentSpeaker);
 };
 
+getMeetingStatus = () => {
+  return isMeetingEventStarted;
+};
+
 exports.startSocket = startSocket;
 exports.isUserAlreadyConnected = isUserAlreadyConnected;
-exports.isMeetingEventStarted = isMeetingEventStarted;
+exports.getMeetingStatus = getMeetingStatus;
