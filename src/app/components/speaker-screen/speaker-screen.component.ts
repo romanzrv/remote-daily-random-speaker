@@ -117,7 +117,7 @@ export class SpeakerScreenComponent implements OnInit {
   checkConnectionStatus() {
     this.socketService.connectionStatus.subscribe((connectionStatus: any) => {
       if (connectionStatus.action === 'reconnect' && connectionStatus.userId === this.getCurrentUserId()) {
-        this.cookieService.set('daily-user', '');
+        this.cookieService.set('daily-user', '', 5, '/', environment.HOST_URL, false, 'Strict');
         this.router.navigate(['/user-select']);
       }
     });
