@@ -74,6 +74,10 @@ export class SpeakerScreenComponent implements OnInit {
       if (this.meetingStarted === 'finished') {
         this.meetingStarted = false;
         this.meetingDone = true;
+        this.cookieService.set('daily-user', '', 5, '/', environment.HOST_URL, false, 'Strict');
+        setTimeout(() => {
+          this.router.navigate(['/user-select']);
+        }, 3000);
       }
     });
   }
