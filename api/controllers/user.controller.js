@@ -54,4 +54,9 @@ userController.checkIfMeetingStarted = (req, res) => {
   }
 };
 
+userController.kickAllUsers = (req, res) => {
+  socketIoController.kickAllUsers();
+  res.status(201).json({status: 201, message: 'Users successfully kicked'});
+}
+
 module.exports = userController;

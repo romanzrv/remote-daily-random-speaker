@@ -21,6 +21,9 @@ export class SocketioService {
   connectionStatusSource = new BehaviorSubject('');
   connectionStatus = this.connectionStatusSource.asObservable();
 
+  kickUsersSource = new BehaviorSubject('');
+  kickUsers = this.kickUsersSource.asObservable();
+
   socket;
 
   constructor() { }
@@ -44,6 +47,10 @@ export class SocketioService {
 
     this.socket.on('connectionStatus', (connectionStatus) => {
       this.connectionStatusSource.next(connectionStatus);
+    });
+
+    this.socket.on('kickAllUsers', (connectionStatus) => {
+      this.kickUsersSource.next(connectionStatus);
     });
   }
 

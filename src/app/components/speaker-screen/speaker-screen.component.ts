@@ -125,6 +125,13 @@ export class SpeakerScreenComponent implements OnInit {
         this.router.navigate(['/user-select']);
       }
     });
+
+    this.socketService.kickUsers.subscribe((connectionStatus: any) => {
+      if (connectionStatus === true) {
+        this.cookieService.set('daily-user', '', 5, '/', environment.HOST_URL, false, 'Strict');
+        this.router.navigate(['/user-select']);
+      }
+    });
   }
 
 }

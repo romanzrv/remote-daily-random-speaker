@@ -8,5 +8,6 @@ router.get('/connected/:id', userController.checkIfUserAlreadyConnectedToDaily);
 router.get('/meeting/started/', userController.checkIfMeetingStarted);
 router.get('/', userController.getUsers);
 router.post('/', userController.createUser);
+router.post('/control/kick', userController.kickAllUsers);
 
 module.exports = router;

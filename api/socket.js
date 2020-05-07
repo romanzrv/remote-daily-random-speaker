@@ -7,9 +7,10 @@ let socketConnectedUsers = [];
 let finishedSpeakers = [];
 let currentSpeaker = '';
 let isHostUserConnected = false;
+let io;
 
 startSocket = (server) => {
-  const io = socket.listen(server, { pingTimeout: 40000000, pingInterval: 40000000 });
+  io = socket.listen(server, { pingTimeout: 40000000, pingInterval: 40000000 });
 
   io.sockets.on('connection', (socket) => {
     createNewUserConnection(socket, io);
@@ -176,6 +177,12 @@ getMeetingStatus = () => {
   return isMeetingEventStarted;
 };
 
+kickAllUsers = () => {
+  finishMeeting();
+  io.emit('kickAllUsers', true);
+}
+
 exports.startSocket = startSocket;
 exports.isUserAlreadyConnected = isUserAlreadyConnected;
 exports.getMeetingStatus = getMeetingStatus;
+exports.kickAllUsers = kickAllUsers;
