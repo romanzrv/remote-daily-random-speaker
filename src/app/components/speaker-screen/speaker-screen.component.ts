@@ -77,6 +77,7 @@ export class SpeakerScreenComponent implements OnInit {
         this.cookieService.set('daily-user', '', 5, '/', environment.HOST_URL, false, 'Strict');
         setTimeout(() => {
           this.router.navigate(['/user-select']);
+          location.reload();
         }, 3000);
       }
     });
@@ -130,6 +131,7 @@ export class SpeakerScreenComponent implements OnInit {
       if (connectionStatus === true) {
         this.cookieService.set('daily-user', '', 5, '/', environment.HOST_URL, false, 'Strict');
         this.router.navigate(['/user-select']);
+        location.reload();
       }
     });
   }
