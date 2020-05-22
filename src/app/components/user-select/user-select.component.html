@@ -1,11 +1,8 @@
 <div class="list-container">
-  <h1>Select Your User</h1>
-  <ul>
-    <li *ngFor="let user of usersList" (click)="selectUser(user['_id'], user)" [ngClass]="{'selected-item': user.active}">
-      {{user['name']}} {{user['surname']}}
-    </li>
-  </ul>
-  <button (click)="joinDaily()">Join Daily</button>
+  <div class="user-card" *ngFor="let user of usersList" (click)="selectUser(user['_id'], user)">
+    <img src="{{user['img'] ? user['img'] : 'assets/user-placeholder.png'}}" alt="User" class="user-photo">
+    <span>{{user['name']}} {{user['surname']}}</span>
+  </div>
 </div>
 
 

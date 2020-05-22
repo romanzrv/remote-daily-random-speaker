@@ -41,6 +41,7 @@ export class UserSelectComponent implements OnInit {
     });
 
     user.active = !user.active;
+    this.joinDaily();
   }
 
   joinDaily() {

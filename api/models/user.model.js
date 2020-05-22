@@ -4,6 +4,7 @@ var UserSchema = new mongoose.Schema({
   name: {type: String, required: true},
   surname: {type: String, required: true},
   nickname: {type: String, required: true},
+  img: {type: String, required: true}
 });
 
 const user = mongoose.model('User', UserSchema);
