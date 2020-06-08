@@ -8,8 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-prod": "source ~/.bash_profile && ng build --prod",
-    "serve": "source ~/.bash_profile && ng serve"
+    "build-prod": "ts-node set-env-prod.ts && ng build --prod",
+    "serve": "ts-node set-env.ts && ng serve"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +23,8 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "dotenv": "^8.2.0",
+    "fs": "0.0.1-security",
     "hammerjs": "^2.0.8",
     "ng-social": "^8.0.0",
     "ngx-cookie-service": "^2.3.0",
