@@ -78,7 +78,7 @@ export class SpeakerScreenComponent implements OnInit {
         setTimeout(() => {
           this.router.navigate(['/user-select']);
           location.reload();
-        }, 3000);
+        }, 4000);
       }
     });
   }
