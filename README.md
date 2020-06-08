@@ -2,16 +2,10 @@
 
 A tiny webapp that selects a random speaker for a remote daily meeting.
 
-## Installation
-
-1. Download and install NodeJS and NPM.
-2. On the root project folder, run `npm install` to install the client side dependencies.
-3. Go to the `api` folder. Run `npm install` to install the server side dependencies.
-
 ## Running the application
 
 1. First of all, edit the `.env` file and set the value of the `MONGO_DB_CONNECTION_STRING` environment variable with your MongoDB connection string.
-2. On the root project folder, run `make run_app` to launch the application.
+2. On the root project folder, run `make run_app`. This will install the server and client side dependencies and serve the application.
 3. Open `http://localhost:4200/` in your browser.
 
 ## Build
