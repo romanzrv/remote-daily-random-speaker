@@ -21,9 +21,10 @@
         <button class="finish-speaking-btn" (click)="finishSpeaking()">Finish talking</button>
       </div>
 
-      <div *ngIf="!isMyTurn && meetingStarted">
-        <h1>{{currentSpeaker['name']}} {{currentSpeaker['surname']}} is speaking</h1>
-        <img src="{{currentSpeaker['img']}}" alt="Current Speaker" width="250" height="250">
+      <div class="speaker-data" *ngIf="!isMyTurn && meetingStarted">
+        <span>CURRENT SPEAKER:</span>
+        <img src="{{currentSpeaker['img']}}" alt="Current Speaker" width="350" height="350">
+        <span>{{currentSpeaker['name']}} {{currentSpeaker['surname']}}</span>
       </div>
 
       <div *ngIf="meetingDone">
