@@ -11,9 +11,8 @@ A tiny webapp that selects a random speaker for a remote daily meeting.
 ## Running the application
 
 1. First of all, edit the `api/database.js` file, adding the URL to connect to your MongoDB database.
-2. On the root project folder, run `ng serve` for a dev server.
-3. Go to the `api` folder, run `npm start` to start the API server.
-4. Open `http://localhost:4200/` in your browser.
+2. On the root project folder, run `make run_app` to launch the application.
+3. Open `http://localhost:4200/` in your browser.
 
 ## Build
 
