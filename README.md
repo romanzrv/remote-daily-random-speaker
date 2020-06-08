@@ -10,7 +10,7 @@ A tiny webapp that selects a random speaker for a remote daily meeting.
 
 ## Running the application
 
-1. First of all, edit the `api/database.js` file, adding the URL to connect to your MongoDB database.
+1. First of all, edit the `.env` file and set the value of the `MONGO_DB_CONNECTION_STRING` environment variable with you MongoDB connection string.
 2. On the root project folder, run `make run_app` to launch the application.
 3. Open `http://localhost:4200/` in your browser.
 
