@@ -19,6 +19,7 @@ export class SpeakerScreenComponent implements OnInit {
   meetingStarted: any;
   currentSpeaker: any;
   meetingDone: any;
+  timerValue: any;
 
   constructor(private cookieService: CookieService,
               private socketService: SocketioService,
@@ -33,6 +34,7 @@ export class SpeakerScreenComponent implements OnInit {
       this.checkIfMeetingStarted();
       this.socketService.setupSocketConnection(this.getCurrentUserId());
       this.getConnectedUsersList();
+      this.getCurrentTimerValue();
     }
   }
 
@@ -41,6 +43,12 @@ export class SpeakerScreenComponent implements OnInit {
       this.connectedUsersList = connectedUsersData;
       this.getCurrentUser();
       this.getOfflineUsersList();
+    });
+  }
+
+  getCurrentTimerValue() {
+    this.socketService.timer.subscribe((timer: any) => {
+      this.timerValue = this.timerValue ? `${timer.minutes}:${timer.seconds}` : '0:0';
     });
   }
 

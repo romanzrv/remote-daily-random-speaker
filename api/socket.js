@@ -7,6 +7,8 @@ let socketConnectedUsers = [];
 let finishedSpeakers = [];
 let currentSpeaker = '';
 let isHostUserConnected = false;
+let timerCounter = {seconds: 0, minutes: 0};
+let timerEvent;
 let io;
 
 startSocket = (server) => {
@@ -112,6 +114,7 @@ finishMeeting = () => {
   isMeetingEventStarted = false;
   isHostUserConnected = false;
   currentSpeaker = '';
+  resetTimer();
 };
 
 checkIfUserHasAlreadySpoken = (userId) => {
@@ -156,16 +159,19 @@ startDailyMeeting = (socket, io) => {
   isMeetingEventStarted = true;
   io.emit('dailyStatus', true);
   io.emit('nextSpeaker', getRandomSpeaker());
+  startTimer();
 };
 
 getNextSpeaker = (socket, io, userId) => {
   dailySpeakers = finishSpeaker(userId, io);
   io.emit('connectedUsers', socketConnectedUsers);
+  resetTimer();
   if (checkIfMeetingIsDone(dailySpeakers)) {
     io.emit('dailyStatus', 'finished');
     finishMeeting();
   } else {
     io.emit('nextSpeaker', getRandomSpeaker());
+    startTimer();
   }
 };
 
@@ -180,6 +186,26 @@ getMeetingStatus = () => {
 kickAllUsers = () => {
   finishMeeting();
   io.emit('kickAllUsers', true);
+}
+
+startTimer = () => {
+  timerEvent = setInterval(incrementTimerAndNotify, 1000);
+}
+
+incrementTimerAndNotify = () => {
+  if (timerCounter.seconds === 59) {
+    timerCounter.minutes++;
+    timerCounter.seconds = 0;
+  } else {
+    timerCounter.seconds++;
+  }
+  io.emit('timer', timerCounter);
+}
+
+resetTimer = () => {
+  clearInterval(timerEvent);
+  timerCounter.seconds = 0;
+  timerCounter.minutes = 0;
 }
 
 exports.startSocket = startSocket;

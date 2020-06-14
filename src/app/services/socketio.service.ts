@@ -24,6 +24,9 @@ export class SocketioService {
   kickUsersSource = new BehaviorSubject('');
   kickUsers = this.kickUsersSource.asObservable();
 
+  timerSource = new BehaviorSubject('');
+  timer = this.timerSource.asObservable();
+
   socket;
 
   constructor() { }
@@ -51,6 +54,10 @@ export class SocketioService {
 
     this.socket.on('kickAllUsers', (connectionStatus) => {
       this.kickUsersSource.next(connectionStatus);
+    });
+
+    this.socket.on('timer', (timer) => {
+      this.timerSource.next(timer);
     });
   }
 
