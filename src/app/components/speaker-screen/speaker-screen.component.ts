@@ -114,6 +114,8 @@ export class SpeakerScreenComponent implements OnInit {
   finishSpeaking() {
     this.isMyTurn = false;
     this.socketService.finishSpeaking(this.getCurrentUserId());
+    this.timerValue = '0:0';
+    this.currentSpeaker = '';
   }
 
   changeUser() {

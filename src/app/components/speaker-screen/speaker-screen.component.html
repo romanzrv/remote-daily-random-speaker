@@ -25,7 +25,7 @@
 
       <div *ngIf="isMyTurn && meetingStarted">
         <h1>It's your turn to speak!</h1>
-        <p id="timer">TIME SPENT: {{timerValue}}</p>
+        <p class="timer-counter">TIME SPENT: {{timerValue}}</p>
         <button class="finish-speaking-btn" (click)="finishSpeaking()">Finish talking</button>
       </div>
 
@@ -33,7 +33,7 @@
         <span>CURRENT SPEAKER:</span>
         <img src="{{currentSpeaker['img']}}" alt="Current Speaker" width="350" height="350">
         <span>{{currentSpeaker['name']}} {{currentSpeaker['surname']}}</span>
-        <p id="timer">TIME SPENT: {{timerValue}}</p>
+        <p class="timer-counter">TIME SPENT: {{timerValue}}</p>
       </div>
 
       <div *ngIf="meetingDone">
