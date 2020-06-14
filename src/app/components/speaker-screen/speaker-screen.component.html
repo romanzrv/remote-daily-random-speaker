@@ -1,8 +1,15 @@
 <div class="container">
   <div class="connected-users">
-    <p>Users connected ({{connectedUsersList.length}}):</p>
+    <p>Users online ({{connectedUsersList.length}}):</p>
     <ul>
       <li *ngFor="let user of connectedUsersList" [ngClass]="{'has-spoken': user['hasSpoken']}">
+        {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span>
+      </li>
+    </ul>
+
+    <p>Users offline ({{offlineUsersList.length}}):</p>
+    <ul>
+      <li class="offline" *ngFor="let user of offlineUsersList" [ngClass]="{'has-spoken': user['hasSpoken']}">
         {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span>
       </li>
     </ul>

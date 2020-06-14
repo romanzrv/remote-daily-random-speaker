@@ -12,6 +12,7 @@ import {environment} from '../../../environments/environment';
 })
 export class SpeakerScreenComponent implements OnInit {
   connectedUsersList: any;
+  offlineUsersList: any;
   currentConnectedUser: any;
   isHostUser = false;
   isMyTurn = false;
@@ -39,6 +40,13 @@ export class SpeakerScreenComponent implements OnInit {
     this.socketService.currentConnectedUser.subscribe((connectedUsersData: any) => {
       this.connectedUsersList = connectedUsersData;
       this.getCurrentUser();
+      this.getOfflineUsersList();
+    });
+  }
+
+  getOfflineUsersList() {
+    this.userService.getAllUsers().subscribe((usersData: any) => {
+      this.offlineUsersList = usersData.filter((item) => !this.connectedUsersList.find(({_id}) => item._id === _id));
     });
   }
 

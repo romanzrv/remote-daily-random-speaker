@@ -45,6 +45,10 @@
 
       li {
         font-weight: 200;
+
+        &.offline {
+          color: #585555;
+        }
       }
     }
   }
