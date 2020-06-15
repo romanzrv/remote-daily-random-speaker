@@ -1,46 +1,108 @@
-<div class="container">
-  <div class="connected-users">
-    <p>Users online ({{connectedUsersList.length}}):</p>
-    <ul>
-      <li *ngFor="let user of connectedUsersList" [ngClass]="{'has-spoken': user['hasSpoken']}">
-        {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span>
-      </li>
-    </ul>
+<!--<div class="container">-->
+<!--  <div class="connected-users">-->
+<!--    <p>Users online ({{connectedUsersList.length}}):</p>-->
+<!--    <ul>-->
+<!--      <li *ngFor="let user of connectedUsersList" [ngClass]="{'has-spoken': user['hasSpoken']}">-->
+<!--        {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span>-->
+<!--      </li>-->
+<!--    </ul>-->
 
-    <p>Users offline ({{offlineUsersList.length}}):</p>
-    <ul>
-      <li class="offline" *ngFor="let user of offlineUsersList" [ngClass]="{'has-spoken': user['hasSpoken']}">
-        {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span>
-      </li>
-    </ul>
-  </div>
-  <div class="current-speaker">
-    <p><b>Me:</b> {{currentConnectedUser['name']}} {{currentConnectedUser['surname']}}</p>
-    <p (click)="changeUser()">[Change user]</p>
+<!--    <p>Users offline ({{offlineUsersList.length}}):</p>-->
+<!--    <ul>-->
+<!--      <li class="offline" *ngFor="let user of offlineUsersList" [ngClass]="{'has-spoken': user['hasSpoken']}">-->
+<!--        {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </div>-->
+<!--  <div class="current-speaker">-->
+<!--    <p><b>Me:</b> {{currentConnectedUser['name']}} {{currentConnectedUser['surname']}}</p>-->
+<!--    <p (click)="changeUser()">[Change user]</p>-->
 
-    <div class="speaking-status">
+<!--    <div class="speaking-status">-->
       <h1 *ngIf="!isHostUser && !meetingStarted && !meetingDone">Waiting for the host...</h1>
       <h1 *ngIf="isHostUser && !meetingStarted && !meetingDone">You are the host!</h1>
       <button class="start-daily-btn" (click)="startDaily()" *ngIf="isHostUser && !meetingStarted && !meetingDone">Start daily</button>
 
-      <div *ngIf="isMyTurn && meetingStarted">
-        <h1>It's your turn to speak!</h1>
-        <p class="timer-counter">TIME SPENT: {{timerValue}}</p>
-        <button class="finish-speaking-btn" (click)="finishSpeaking()">Finish talking</button>
-      </div>
+<!--      <div *ngIf="isMyTurn && meetingStarted">-->
+<!--        <h1>It's your turn to speak!</h1>-->
+<!--        <p class="timer-counter">TIME SPENT: {{timerValue}}</p>-->
+<!--        <button class="finish-speaking-btn" (click)="finishSpeaking()">Finish talking</button>-->
+<!--      </div>-->
 
-      <div class="speaker-data" *ngIf="!isMyTurn && meetingStarted">
-        <span>CURRENT SPEAKER:</span>
-        <img src="{{currentSpeaker['img']}}" alt="Current Speaker" width="350" height="350">
-        <span>{{currentSpeaker['name']}} {{currentSpeaker['surname']}}</span>
-        <p class="timer-counter">TIME SPENT: {{timerValue}}</p>
-      </div>
+<!--      <div class="speaker-data" *ngIf="!isMyTurn && meetingStarted">-->
+<!--        <span>CURRENT SPEAKER:</span>-->
+<!--        <img src="{{currentSpeaker['img']}}" alt="Current Speaker" width="350" height="350">-->
+<!--        <span>{{currentSpeaker['name']}} {{currentSpeaker['surname']}}</span>-->
+<!--        <p class="timer-counter">TIME SPENT: {{timerValue}}</p>-->
+<!--      </div>-->
 
-      <div *ngIf="meetingDone">
-        <h1>Meeting Done! Bye!</h1>
-        <img src="https://media.makeameme.org/created/its-done-the-5b61cf.jpg" alt="Meeting Done" height="400" width="400">
+<!--      <div *ngIf="meetingDone">-->
+<!--        <h1>Meeting Done! Bye!</h1>-->
+<!--        <img src="https://media.makeameme.org/created/its-done-the-5b61cf.jpg" alt="Meeting Done" height="400" width="400">-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--  </div>-->
+<!--</div>-->
+
+<div class="container">
+  <div class="connected-users">
+    <div class="users-list">
+      <p>Users online ({{connectedUsersList.length}}):</p>
+      <ul>
+        <li *ngFor="let user of connectedUsersList" [ngClass]="{'has-spoken': user['hasSpoken']}">
+          <i class="fa fa-user"></i>
+          {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span>
+        </li>
+      </ul>
+
+      <p>Users offline ({{offlineUsersList.length}}):</p>
+      <ul>
+        <li class="offline" *ngFor="let user of offlineUsersList" [ngClass]="{'has-spoken': user['hasSpoken']}">
+          <i class="fa fa-user"></i>
+          {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span>
+        </li>
+      </ul>
+    </div>
+    <div class="logged-as">
+      <div class="logged-user-info">
+        <span>Logged in as:</span>
+        <span>{{currentConnectedUser['name']}} {{currentConnectedUser['surname']}}</span>
+      </div>
+      <div class="logout">
+        <i class="fa fa-power-off"></i>
       </div>
     </div>
+  </div>
 
+  <div class="current-speaker">
+    <div class="background-primary">
+      <div class="daily-title">
+        <i class="fa fa-code-fork" aria-hidden="true"></i>
+        <span>Some Team Daily Meeting</span>
+        <span>The best team in the world, the best meeting forever</span>
+      </div>
+    </div>
+    <div class="background-secondary"></div>
+    <div class="speaker-card-wrapper">
+      <div class="speaker-card">
+        <div class="speaker-card-title">
+          Current Speaker: {{currentConnectedUser['name']}} {{currentConnectedUser['surname']}}
+        </div>
+        <div class="speaker-card-content">
+          <div class="speaker-image">
+            <img src="{{currentConnectedUser['img']}}" alt="Current Speaker">
+          </div>
+          <div class="speaker-timer">
+            <div class="counter-icon">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+            </div>
+            <div class="counter-value">
+              <span>{{timerValue}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
