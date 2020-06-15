@@ -19,9 +19,9 @@
 <!--    <p (click)="changeUser()">[Change user]</p>-->
 
 <!--    <div class="speaking-status">-->
-      <h1 *ngIf="!isHostUser && !meetingStarted && !meetingDone">Waiting for the host...</h1>
-      <h1 *ngIf="isHostUser && !meetingStarted && !meetingDone">You are the host!</h1>
-      <button class="start-daily-btn" (click)="startDaily()" *ngIf="isHostUser && !meetingStarted && !meetingDone">Start daily</button>
+<!--      <h1 *ngIf="!isHostUser && !meetingStarted && !meetingDone">Waiting for the host...</h1>-->
+<!--      <h1 *ngIf="isHostUser && !meetingStarted && !meetingDone">You are the host!</h1>-->
+<!--      <button class="start-daily-btn" (click)="startDaily()" *ngIf="isHostUser && !meetingStarted && !meetingDone">Start daily</button>-->
 
 <!--      <div *ngIf="isMyTurn && meetingStarted">-->
 <!--        <h1>It's your turn to speak!</h1>-->
@@ -70,7 +70,7 @@
         <span>{{currentConnectedUser['name']}} {{currentConnectedUser['surname']}}</span>
       </div>
       <div class="logout">
-        <i class="fa fa-power-off"></i>
+        <i (click)="changeUser()" class="fa fa-power-off"></i>
       </div>
     </div>
   </div>
@@ -83,15 +83,25 @@
         <span>The best team in the world, the best meeting forever</span>
       </div>
     </div>
-    <div class="background-secondary"></div>
+    <div class="background-secondary">
+      <button *ngIf="isMyTurn && meetingStarted" (click)="finishSpeaking()">Next speaker</button>
+      <button class="start-daily-btn" (click)="startDaily()" *ngIf="isHostUser && !meetingStarted && !meetingDone">Start daily</button>
+    </div>
     <div class="speaker-card-wrapper">
       <div class="speaker-card">
         <div class="speaker-card-title">
-          Current Speaker: {{currentConnectedUser['name']}} {{currentConnectedUser['surname']}}
+          <span *ngIf="!isMyTurn && meetingStarted">Current Speaker: {{currentSpeaker['name']}} {{currentSpeaker['surname']}}</span>
+          <span *ngIf="!isHostUser && !meetingStarted && !meetingDone">Waiting for the host...</span>
+          <span *ngIf="isMyTurn && meetingStarted">It's your turn to speak!</span>
+          <span *ngIf="isHostUser && !meetingStarted && !meetingDone">You are the host!</span>
+
         </div>
         <div class="speaker-card-content">
           <div class="speaker-image">
-            <img src="{{currentConnectedUser['img']}}" alt="Current Speaker">
+            <img *ngIf="!isMyTurn && meetingStarted" src="{{currentSpeaker['img']}}" alt="Current Speaker">
+            <img *ngIf="!isHostUser && !meetingStarted && !meetingDone" src="https://lafeber.com/pet-birds/wp-content/uploads/2018/06/Umbrella-Cockatoo.jpg" alt="Current Speaker">
+            <img *ngIf="isMyTurn && meetingStarted" src="{{currentConnectedUser['img']}}" alt="Current Speaker">
+            <img *ngIf="isHostUser && !meetingStarted && !meetingDone" src="https://lafeber.com/pet-birds/wp-content/uploads/2018/06/Umbrella-Cockatoo.jpg" alt="Current Speaker">
           </div>
           <div class="speaker-timer">
             <div class="counter-icon">
