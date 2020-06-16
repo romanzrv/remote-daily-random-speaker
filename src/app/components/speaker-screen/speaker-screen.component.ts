@@ -20,6 +20,8 @@ export class SpeakerScreenComponent implements OnInit {
   currentSpeaker: any;
   meetingDone: any;
   timerValue: any;
+  dailyTitle: string;
+  dailySubTitle: string;
 
   constructor(private cookieService: CookieService,
               private socketService: SocketioService,
@@ -30,6 +32,8 @@ export class SpeakerScreenComponent implements OnInit {
     if (this.getCurrentUserId() === '') {
       this.router.navigate(['/user-select']);
     } else {
+      this.dailyTitle = environment.SPEAKER_SCREEN_TITLE;
+      this.dailySubTitle = environment.SPEAKER_SCREEN_SUBTITLE;
       this.checkConnectionStatus();
       this.checkIfMeetingStarted();
       this.socketService.setupSocketConnection(this.getCurrentUserId());
