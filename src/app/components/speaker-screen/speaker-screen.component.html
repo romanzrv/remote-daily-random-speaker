@@ -18,9 +18,11 @@
       </ul>
     </div>
     <div class="logged-as">
-      <div class="logged-user-info">
-        <span>Logged in as:</span>
-        <span>{{currentConnectedUser['name']}} {{currentConnectedUser['surname']}}</span>
+      <div class="logged-user-info wrapper">
+        <div>
+          <span>Logged in as:</span>
+          <span>{{currentConnectedUser['name']}} {{currentConnectedUser['surname']}}</span>
+        </div>
       </div>
       <div class="logout">
         <i (click)="changeUser()" class="fa fa-power-off"></i>
