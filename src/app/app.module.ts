@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CookieService} from 'ngx-cookie-service';
 import { SocketioService} from './services/socketio.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatListModule, MatSidenavModule } from '@angular/material';
+import {MatListModule, MatSidenavModule, MatSlideToggleModule} from '@angular/material';
 import { MatSnackBarModule } from '@angular/material';
 
 @NgModule({
@@ -25,7 +25,8 @@ import { MatSnackBarModule } from '@angular/material';
         BrowserAnimationsModule,
         MatListModule,
         MatSidenavModule,
-      MatSnackBarModule
+        MatSnackBarModule,
+        MatSlideToggleModule
     ],
   providers: [CookieService, SocketioService],
   bootstrap: [AppComponent]

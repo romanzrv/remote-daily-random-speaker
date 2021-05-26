@@ -1,3 +1,7 @@
+<div class="spectator">
+  <mat-slide-toggle color="primary" [checked]="spectatorModeChecked" (change)="toggleSpectatorCookieValue()">SPECTATOR MODE</mat-slide-toggle>
+</div>
+
 <div class="list-container">
   <div class="user-card" *ngFor="let user of usersList" (click)="selectUser(user['_id'], user)">
     <img src="{{user['img'] ? user['img'] : 'assets/user-placeholder.png'}}" alt="User" class="user-photo">

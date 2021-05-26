@@ -14,6 +14,7 @@ import {environment} from '../../../environments/environment';
 export class UserSelectComponent implements OnInit {
   usersList: any;
   selectedUser: any;
+  spectatorModeChecked: any = false;
 
   constructor(private userService: UserServiceService,
               private cookieService: CookieService,
@@ -23,6 +24,13 @@ export class UserSelectComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    if (this.getUserSpectatorStatusCookie() === '') {
+      this.setUserSpectatorStatusCookie();
+    } else if (this.getUserSpectatorStatusCookie() !== '') {
+      this.spectatorModeChecked = this.getUserSpectatorStatusCookie() === 'true';
+    }
+
     if (this.getUserCookie() !== '') {
       this.router.navigate(['/speaker-screen']);
     } else if (this.getUserCookie() === '') {
@@ -53,12 +61,19 @@ export class UserSelectComponent implements OnInit {
   }
 
   setUserCookie() {
-    console.log('cookie');
     this.cookieService.set('daily-user', this.selectedUser, 5, '/', environment.HOST_URL, false, 'Strict');
+  }
+
+  setUserSpectatorStatusCookie() {
+    this.cookieService.set('spectator', this.spectatorModeChecked, 9999, '/', environment.HOST_URL, false, 'Strict');
   }
 
   getUserCookie() {
     return this.cookieService.get('daily-user');
+  }
+
+  getUserSpectatorStatusCookie() {
+    return this.cookieService.get('spectator');
   }
 
   showMessageSnackBar(message, action) {
@@ -75,5 +90,10 @@ export class UserSelectComponent implements OnInit {
         this.router.navigate(['/speaker-screen']);
       }
     });
+  }
+
+  toggleSpectatorCookieValue() {
+    this.spectatorModeChecked = !this.spectatorModeChecked;
+    this.setUserSpectatorStatusCookie();
   }
 }
