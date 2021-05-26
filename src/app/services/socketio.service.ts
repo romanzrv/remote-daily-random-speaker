@@ -31,9 +31,9 @@ export class SocketioService {
 
   constructor() { }
 
-  setupSocketConnection(connectedUserId) {
+  setupSocketConnection(connectedUserId, isSpectator) {
     this.socket = io(environment.SOCKET_ENDPOINT, {
-      query: {userId: connectedUserId}
+      query: {userId: connectedUserId, spectator: isSpectator}
     });
 
     this.socket.on('connectedUsers', (receivedData) => {

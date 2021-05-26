@@ -5,7 +5,7 @@
       <ul>
         <li *ngFor="let user of connectedUsersList" [ngClass]="{'has-spoken': user['hasSpoken']}">
           <i class="fa fa-user"></i>
-          {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span>
+          {{user['name']}} {{user['surname']}} <span *ngIf="user['host']">[host]</span> <span *ngIf="user['spectator']">[spec]</span>
         </li>
       </ul>
 

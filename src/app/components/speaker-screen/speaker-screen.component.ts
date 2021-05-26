@@ -36,7 +36,7 @@ export class SpeakerScreenComponent implements OnInit {
       this.dailySubTitle = environment.SPEAKER_SCREEN_SUBTITLE;
       this.checkConnectionStatus();
       this.checkIfMeetingStarted();
-      this.socketService.setupSocketConnection(this.getCurrentUserId());
+      this.socketService.setupSocketConnection(this.getCurrentUserId(), this.getUserSpectatorStatusCookie());
       this.getConnectedUsersList();
       this.getCurrentTimerValue();
     }
@@ -130,6 +130,10 @@ export class SpeakerScreenComponent implements OnInit {
 
   getCurrentUserId() {
     return this.cookieService.get('daily-user');
+  }
+
+  getUserSpectatorStatusCookie() {
+    return this.cookieService.get('spectator');
   }
 
   checkIfMeetingStarted() {

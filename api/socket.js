@@ -76,6 +76,12 @@ checkIfHostUser = (userProfile) => {
   }
 };
 
+checkIfSpectatorUser = (userProfile, isSpectator) => {
+  if (isSpectator === 'true') {
+    userProfile.spectator = true;
+  }
+}
+
 addRandomHostUser = () => {
   if (!isHostUserConnected) {
     if (socketConnectedUsers[0]) {
@@ -126,6 +132,7 @@ createNewUserConnection = (socket, io) => {
     let userProfile = {...userProfileInfo};
     if (!isUserAlreadyConnected(socket.handshake.query.userId)) {
       checkIfHostUser(userProfile);
+      checkIfSpectatorUser(userProfile, socket.handshake.query.spectator);
       socketConnectedUsers.push(userProfile);
       io.emit('dailyStatus', isMeetingEventStarted);
       if (isMeetingEventStarted) {
