@@ -69,16 +69,17 @@ isUserAlreadyConnected = (userId) => {
 
 checkIfHostUser = (userProfile) => {
   if (!isHostUserConnected) {
-    if (!socketConnectedUsers.filter((item) => item.host).length > 0) {
+    if (!socketConnectedUsers.filter((item) => item.host).length > 0 && !userProfile.spectator) {
       userProfile.host = true;
       isHostUserConnected = true;
     }
   }
 };
 
-checkIfSpectatorUser = (userProfile, isSpectator) => {
+checkIfSpectatorUser = (userProfile, isSpectator, userId) => {
   if (isSpectator === 'true') {
     userProfile.spectator = true;
+    // dailySpeakers = finishSpeaker(userId);
   }
 }
 
@@ -91,7 +92,7 @@ addRandomHostUser = () => {
   }
 };
 
-finishSpeaker = (speakerId, io) => {
+finishSpeaker = (speakerId) => {
   finishedSpeakers.push(speakerId);
   socketConnectedUsers = socketConnectedUsers.map((item) => {
     if (item._id === speakerId) {
@@ -131,8 +132,8 @@ createNewUserConnection = (socket, io) => {
   getConnectedUserInfo(socket.handshake.query.userId).then((userProfileInfo) => {
     let userProfile = {...userProfileInfo};
     if (!isUserAlreadyConnected(socket.handshake.query.userId)) {
+      checkIfSpectatorUser(userProfile, socket.handshake.query.spectator, socket.handshake.query.userId);
       checkIfHostUser(userProfile);
-      checkIfSpectatorUser(userProfile, socket.handshake.query.spectator);
       socketConnectedUsers.push(userProfile);
       io.emit('dailyStatus', isMeetingEventStarted);
       if (isMeetingEventStarted) {
@@ -163,6 +164,7 @@ closeExistingUserConnection = (socket, io) => {
 
 startDailyMeeting = (socket, io) => {
   dailySpeakers = [...socketConnectedUsers];
+  dailySpeakers = dailySpeakers.filter((item) => !item.spectator);
   isMeetingEventStarted = true;
   io.emit('dailyStatus', true);
   io.emit('nextSpeaker', getRandomSpeaker());
@@ -170,7 +172,7 @@ startDailyMeeting = (socket, io) => {
 };
 
 getNextSpeaker = (socket, io, userId) => {
-  dailySpeakers = finishSpeaker(userId, io);
+  dailySpeakers = finishSpeaker(userId);
   io.emit('connectedUsers', socketConnectedUsers);
   resetTimer();
   if (checkIfMeetingIsDone(dailySpeakers)) {
