@@ -95,10 +95,15 @@ export class SpeakerScreenComponent implements OnInit {
         this.meetingStarted = false;
         this.meetingDone = true;
         this.cookieService.set('daily-user', '', 5, '/', environment.HOST_URL, false, 'Strict');
-        setTimeout(() => {
-          this.router.navigate(['/user-select']);
-          location.reload();
-        }, 4000);
+
+        const audio = new Audio('/assets/audio/02.mp3');
+        audio.play();
+        audio.addEventListener('ended', () => {
+          setTimeout(() => {
+            this.router.navigate(['/user-select']);
+            location.reload();
+          }, 2000);
+        });
       }
     });
   }
