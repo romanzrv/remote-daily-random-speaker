@@ -22,6 +22,7 @@ export class SpeakerScreenComponent implements OnInit {
   timerValue: any;
   dailyTitle: string;
   dailySubTitle: string;
+  audioPlayed = false;
 
   constructor(private cookieService: CookieService,
               private socketService: SocketioService,
@@ -96,14 +97,10 @@ export class SpeakerScreenComponent implements OnInit {
         this.meetingDone = true;
         this.cookieService.set('daily-user', '', 5, '/', environment.HOST_URL, false, 'Strict');
 
-        const audio = new Audio('/assets/audio/02.mp3');
-        audio.play();
-        audio.addEventListener('ended', () => {
-          setTimeout(() => {
-            this.router.navigate(['/user-select']);
-            location.reload();
-          }, 2000);
-        });
+        setTimeout(() => {
+          this.router.navigate(['/user-select']);
+          location.reload();
+        }, 2000);
       }
     });
   }
